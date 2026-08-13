@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Whisper Transcriber",
+  "version": "1.0.0",
+  "description": "Streams tab audio locally to whisper.cpp for continuous live transcription.",
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Whisper Transcriber"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

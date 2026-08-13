@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="title">Whisper Transcriber</div>
+      <div id="statusDot" class="dot disconnected"></div>
+    </div>
+    
+    <div id="statusText" class="status">Disconnected</div>
+
+    <button id="toggleBtn" class="btn start">Start Recording</button>
+
+    <div class="footer">
+      Saves to <code>transcript.txt</code>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

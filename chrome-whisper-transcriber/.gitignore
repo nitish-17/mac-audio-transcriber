@@ -1,0 +1,27 @@
+# Python
+venv/
+server/venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Whisper binaries & models (cloned/built via setup_whisper.sh)
+whisper.cpp/
+*.bin
+*.dylib
+
+# Output transcripts & temp audio
+transcript.txt
+*.wav
+*.tmp
+
+# Operating System
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
