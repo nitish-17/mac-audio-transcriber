@@ -17,15 +17,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Fetch current state from background
-  const response = await chrome.runtime.sendMessage({ action: 'GET_STATE' });
-  if (response) {
-    updateUI(response.isRecording, response.statusMessage);
+  // Fetch verified state from background
+  const state = await chrome.runtime.sendMessage({ action: 'GET_STATE' });
+  if (state) {
+    updateUI(state.isRecording, state.statusMessage);
   }
 
+  // Listen for storage changes in real time
+  chrome.storage.onChanged.addListener((changes) => {
+    chrome.runtime.sendMessage({ action: 'GET_STATE' }).then((currentState) => {
+      if (currentState) {
+        updateUI(currentState.isRecording, currentState.statusMessage);
+      }
+    });
+  });
+
   toggleBtn.addEventListener('click', async () => {
-    const state = await chrome.runtime.sendMessage({ action: 'GET_STATE' });
-    if (state && state.isRecording) {
+    const currentState = await chrome.runtime.sendMessage({ action: 'GET_STATE' });
+    if (currentState && currentState.isRecording) {
       updateUI(false, 'Stopping...');
       await chrome.runtime.sendMessage({ action: 'STOP_RECORDING' });
       updateUI(false, 'Stopped');
@@ -34,8 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const startRes = await chrome.runtime.sendMessage({ action: 'START_RECORDING' });
       if (startRes && startRes.error) {
         updateUI(false, `Error: ${startRes.error}`);
-      } else {
-        updateUI(true, 'Transcribing tab audio...');
       }
     }
   });

@@ -43,6 +43,12 @@ async function startCapture(streamId) {
 
     source.connect(workletNode);
 
+    // Connect workletNode through a silent gain node to destination so Web Audio graph executes process()
+    const silentGain = audioContext.createGain();
+    silentGain.gain.value = 0;
+    workletNode.connect(silentGain);
+    silentGain.connect(audioContext.destination);
+
     // 4. Connect WebSocket to local Whisper Python server
     websocket = new WebSocket('ws://127.0.0.1:8000');
 
@@ -87,24 +93,34 @@ async function startCapture(streamId) {
 function stopCapture() {
   if (websocket) {
     if (websocket.readyState === WebSocket.OPEN) {
-      websocket.send('STOP');
+      try {
+        websocket.send('STOP');
+      } catch (e) {}
       websocket.close();
     }
     websocket = null;
   }
 
   if (workletNode) {
-    workletNode.disconnect();
+    try {
+      workletNode.disconnect();
+    } catch (e) {}
     workletNode = null;
   }
 
   if (audioContext) {
-    audioContext.close();
+    try {
+      audioContext.close();
+    } catch (e) {}
     audioContext = null;
   }
 
   if (mediaStream) {
-    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream.getTracks().forEach(track => {
+      try {
+        track.stop();
+      } catch (e) {}
+    });
     mediaStream = null;
   }
 }
