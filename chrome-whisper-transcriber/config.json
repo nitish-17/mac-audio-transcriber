@@ -1,0 +1,5 @@
+{
+  "transcript_path": "~/Documents/notes/files/transcript.md",
+  "port": 8000,
+  "model_name": "large-v3-turbo"
+}

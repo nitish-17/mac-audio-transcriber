@@ -1,6 +1,6 @@
 # Chrome Whisper Transcriber 🎙️⚡
 
-A 100% local, private, on-device macOS continuous audio transcriber. Captures audio playing from any Chrome tab (YouTube, streaming videos, podcasts, protected streams) and transcribes speech live into a single `transcript.txt` file using **Metal-accelerated `whisper.cpp`**.
+A 100% local, private, on-device macOS continuous audio transcriber. Captures audio playing from any Chrome tab (YouTube, streaming videos, podcasts, protected streams) and transcribes speech live into `~/Documents/notes/files/transcript.txt` using **Metal-accelerated `whisper.cpp`**.
 
 ---
 
@@ -31,7 +31,7 @@ cd chrome-whisper-transcriber
 ./server/start_server.sh
 ```
 
-The server will listen on `ws://127.0.0.1:8000` and append transcriptions directly to `./transcript.txt`.
+The server will listen on `ws://127.0.0.1:8000` and append transcriptions directly to `~/Documents/notes/files/transcript.txt`.
 
 ### 3. Load Chrome Extension
 
@@ -44,4 +44,4 @@ The server will listen on `ws://127.0.0.1:8000` and append transcriptions direct
 1. Open any Chrome tab playing video or audio.
 2. Click the **Whisper Transcriber** extension icon in Chrome.
 3. Click **Start Recording**.
-4. Enjoy listening to your video — the speech will be continuously transcribed and appended to `transcript.txt`!
+4. Enjoy listening to your video — the speech will be continuously transcribed and appended to `~/Documents/notes/files/transcript.txt`!

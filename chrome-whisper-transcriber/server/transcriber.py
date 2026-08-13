@@ -14,22 +14,34 @@ HALLUCINATION_PATTERNS = {
 }
 
 class Transcriber:
-    def __init__(self, project_dir: str, transcript_filename: str = "transcript.txt"):
+    def __init__(self, project_dir: str, output_path: str, model_name: str):
         self.project_dir = project_dir
-        self.transcript_path = os.path.join(project_dir, transcript_filename)
+        
+        # Expand ~ if present and resolve absolute/relative path
+        expanded_path = os.path.expanduser(output_path)
+        if os.path.isabs(expanded_path):
+            self.transcript_path = expanded_path
+        else:
+            self.transcript_path = os.path.abspath(os.path.join(project_dir, expanded_path))
+
         self.whisper_cli = os.path.join(project_dir, "whisper.cpp", "build", "bin", "whisper-cli")
-        self.model_path = os.path.join(project_dir, "whisper.cpp", "models", "ggml-large-v3-turbo.bin")
+        self.model_path = os.path.join(project_dir, "whisper.cpp", "models", f"ggml-{model_name}.bin")
         
         self.sample_rate = 16000
         self.audio_buffer = np.array([], dtype=np.float32)
         
-        # Audio chunking duration (~4.0 seconds per audio segment)
         self.target_chunk_duration = 4.0
         self.last_prompt = ""
         self.is_processing = False
 
+        # Ensure target directory exists on initialization
+        parent_dir = os.path.dirname(self.transcript_path)
+        if parent_dir and not os.path.exists(parent_dir):
+            os.makedirs(parent_dir, exist_ok=True)
+
         print(f"[Transcriber] Initialized.")
         print(f"[Transcriber] Output file: {self.transcript_path}")
+        print(f"[Transcriber] Model path:  {self.model_path}")
 
     def add_audio_data(self, raw_pcm_bytes: bytes):
         """Receives 16kHz Mono 16-bit Int16 PCM byte data from WebSocket stream."""
@@ -63,7 +75,7 @@ class Transcriber:
         try:
             text = self._run_whisper(chunk_to_transcribe)
             if text and self._is_valid_transcription(text):
-                print(f"[SAVED TO transcript.txt]: {text}")
+                print(f"[SAVED TO {self.transcript_path}]: {text}")
                 self._append_to_transcript(text)
                 words = text.split()
                 self.last_prompt = " ".join(words[-20:])
@@ -146,6 +158,10 @@ class Transcriber:
     def _append_to_transcript(self, text: str):
         if not text:
             return
+
+        parent_dir = os.path.dirname(self.transcript_path)
+        if parent_dir and not os.path.exists(parent_dir):
+            os.makedirs(parent_dir, exist_ok=True)
 
         with open(self.transcript_path, "a", encoding="utf-8") as f:
             f.write(text + "\n")

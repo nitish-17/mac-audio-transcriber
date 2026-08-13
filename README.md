@@ -1,6 +1,6 @@
 # Chrome Audio Transcriber (whisper.cpp) 🎙️⚡
 
-100% local, private macOS Chrome audio transcriber. Captures audio playing from any Chrome tab and transcribes speech live into `chrome-whisper-transcriber/transcript.txt` using Metal GPU-accelerated `whisper.cpp` (`large-v3-turbo` model).
+100% local, private macOS Chrome audio transcriber. Captures audio playing from any Chrome tab and transcribes speech live into `~/Documents/notes/files/transcript.txt` using Metal GPU-accelerated `whisper.cpp` (`large-v3-turbo` model).
 
 ---
 
@@ -34,4 +34,4 @@ cd chrome-whisper-transcriber
 
 1. Play any video or audio stream in Chrome.
 2. Click the **Whisper Transcriber** extension icon and click **Start Recording**.
-3. Speech is continuously appended to `chrome-whisper-transcriber/transcript.txt`.
+3. Speech is continuously appended to `~/Documents/notes/files/transcript.txt`.

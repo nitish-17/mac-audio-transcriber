@@ -11,4 +11,4 @@ if [ ! -f "$VENV_PYTHON" ]; then
 fi
 
 echo "Starting Whisper WebSocket Server on ws://127.0.0.1:8000..."
-exec "$VENV_PYTHON" "$SERVER_DIR/main.py"
+exec "$VENV_PYTHON" "$SERVER_DIR/main.py" "$@"

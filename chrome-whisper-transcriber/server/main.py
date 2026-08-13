@@ -1,14 +1,35 @@
 import os
 import sys
+import json
 import asyncio
 import websockets
 from transcriber import Transcriber
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-HOST = "127.0.0.1"
-PORT = 8000
+CONFIG_PATH = os.path.join(PROJECT_DIR, "config.json")
 
-transcriber = Transcriber(project_dir=PROJECT_DIR)
+def load_config():
+    """Loads configuration settings directly from config.json."""
+    if not os.path.exists(CONFIG_PATH):
+        raise FileNotFoundError(f"Configuration file missing: {CONFIG_PATH}")
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+config = load_config()
+
+HOST = "127.0.0.1"
+PORT = config.get("port", 8000)
+
+output_filepath = config.get("transcript_path")
+model_name = config.get("model_name")
+
+# Override output_filepath via CLI argument or environment variable if passed
+if len(sys.argv) > 1 and sys.argv[1].strip():
+    output_filepath = sys.argv[1].strip()
+elif os.getenv("TRANSCRIPT_PATH"):
+    output_filepath = os.getenv("TRANSCRIPT_PATH").strip()
+
+transcriber = Transcriber(project_dir=PROJECT_DIR, output_path=output_filepath, model_name=model_name)
 
 async def handle_websocket(websocket):
     print(f"[{HOST}:{PORT}] Client connected! Audio streaming started.")
