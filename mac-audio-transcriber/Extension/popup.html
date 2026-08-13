@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Transcriber</h2>
+            <div id="status-indicator" class="status-indicator idle"></div>
+        </div>
+        <p id="status-text">Ready to record tab audio</p>
+
+        <div class="actions">
+            <button id="btn-start" class="btn primary">Start Recording</button>
+            <button id="btn-stop" class="btn danger" style="display: none;">Stop Recording</button>
+        </div>
+
+        <p id="live-preview" class="live-preview" style="display: none;"></p>
+
+        <div id="error-message" class="error" style="display: none;"></div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

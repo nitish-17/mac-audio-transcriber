@@ -1,0 +1,132 @@
+:root {
+    --bg-color: #1e1e2e;
+    --text-color: #cdd6f4;
+    --text-muted: #a6adc8;
+    --primary: #89b4fa;
+    --primary-hover: #b4befe;
+    --danger: #f38ba8;
+    --danger-hover: #eba0ac;
+    --surface: #313244;
+}
+
+body {
+    width: 250px;
+    margin: 0;
+    padding: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.idle {
+    background-color: var(--text-muted);
+}
+
+.status-indicator.recording {
+    background-color: var(--danger);
+    box-shadow: 0 0 8px var(--danger);
+    animation: pulse 1.5s infinite;
+}
+
+.status-indicator.starting, .status-indicator.stopping {
+    background-color: #f9e2af;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#status-text {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn.primary {
+    background-color: var(--primary);
+    color: #11111b;
+}
+
+.btn.primary:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+}
+
+.btn.danger {
+    background-color: var(--danger);
+    color: #11111b;
+}
+
+.btn.danger:hover:not(:disabled) {
+    background-color: var(--danger-hover);
+}
+
+.live-preview {
+    margin: 0;
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    background-color: var(--surface);
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+}
+
+.error {
+    color: var(--danger);
+    font-size: 12px;
+    background-color: rgba(243, 139, 168, 0.1);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(243, 139, 168, 0.2);
+}

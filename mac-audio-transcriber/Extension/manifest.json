@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Audio Transcriber",
+  "version": "1.0",
+  "description": "Transcribes tab audio locally via a WebSocket server.",
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

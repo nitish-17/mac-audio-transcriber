@@ -1,0 +1,27 @@
+# Swift / SPM Build Artifacts
+Server/.build/
+.build/
+*.build
+*.swiftmodule
+*.swiftdoc
+*.swiftsourceinfo
+.swiftpm/
+
+# Generated Output Files
+Server/transcript.txt
+*.txt
+
+# macOS System Files
+.DS_Store
+.Trashes
+._*
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.xcodeproj/
+*.xcworkspace/
+
+# Temporary / Log files
+*.log
+scratch/
