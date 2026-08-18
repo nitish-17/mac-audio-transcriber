@@ -14,8 +14,9 @@ HALLUCINATION_PATTERNS = {
 }
 
 class Transcriber:
-    def __init__(self, project_dir: str, output_path: str, model_name: str):
+    def __init__(self, project_dir: str, output_path: str, model_name: str, language: str = "en"):
         self.project_dir = project_dir
+        self.language = language or "en"
         
         # Expand ~ if present and resolve absolute/relative path
         expanded_path = os.path.expanduser(output_path)
@@ -40,6 +41,7 @@ class Transcriber:
             os.makedirs(parent_dir, exist_ok=True)
 
         print(f"[Transcriber] Initialized.")
+        print(f"[Transcriber] Language:    {self.language}")
         print(f"[Transcriber] Output file: {self.transcript_path}")
         print(f"[Transcriber] Model path:  {self.model_path}")
 
@@ -131,7 +133,7 @@ class Transcriber:
                 "-f", tmp_wav_path,
                 "-nt",
                 "-np",
-                "-l", "auto",
+                "-l", self.language,
                 "-t", "4"
             ]
 

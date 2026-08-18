@@ -1,5 +1,6 @@
 {
-  "transcript_path": "~/Documents/notes/files/transcript.md",
+  "transcript_path": "~/Documents/notes/files/yt.md",
   "port": 8000,
-  "model_name": "large-v3-turbo"
+  "model_name": "large-v3-turbo",
+  "language": "en"
 }

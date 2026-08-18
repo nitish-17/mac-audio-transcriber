@@ -22,6 +22,7 @@ PORT = config.get("port", 8000)
 
 output_filepath = config.get("transcript_path")
 model_name = config.get("model_name")
+language = config.get("language", "en")
 
 # Override output_filepath via CLI argument or environment variable if passed
 if len(sys.argv) > 1 and sys.argv[1].strip():
@@ -29,7 +30,12 @@ if len(sys.argv) > 1 and sys.argv[1].strip():
 elif os.getenv("TRANSCRIPT_PATH"):
     output_filepath = os.getenv("TRANSCRIPT_PATH").strip()
 
-transcriber = Transcriber(project_dir=PROJECT_DIR, output_path=output_filepath, model_name=model_name)
+transcriber = Transcriber(
+    project_dir=PROJECT_DIR,
+    output_path=output_filepath,
+    model_name=model_name,
+    language=language
+)
 
 async def handle_websocket(websocket):
     print(f"[{HOST}:{PORT}] Client connected! Audio streaming started.")
@@ -57,6 +63,7 @@ async def main():
     print(f" Chrome Whisper Transcriber Server")
     print(f" Listening on: ws://{HOST}:{PORT}")
     print(f" Output File:  {transcriber.transcript_path}")
+    print(f" Language:     {transcriber.language}")
     print("==================================================")
     
     async with websockets.serve(handle_websocket, HOST, PORT):
